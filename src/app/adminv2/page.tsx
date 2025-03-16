@@ -42,7 +42,8 @@ const WalletAdmin = () => {
 
     const activeCard = cards.find(card => card.name === selectedCard);
 
-    const handleSidebarItemClick = (itemName) => {
+
+    const handleSidebarItemClick = (itemName: unknown) => {
         setIsDashboardActive(itemName === 'Dashboard');
         setIsFinanceActive(itemName === 'Finance');
         setIsSendRequestActive(itemName === 'Send and Request');

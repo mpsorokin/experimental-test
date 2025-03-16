@@ -1,11 +1,11 @@
 "use client"
 
 import React, { useState } from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled, useTheme, Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
-import MuiAppBar from '@mui/material/AppBar';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
@@ -37,19 +37,29 @@ import Menu from '@mui/material/Menu';
 
 const drawerWidth = 240;
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+// Define custom interfaces for styled components with open prop
+interface MainProps {
+    open?: boolean;
+    theme?: Theme;
+}
+
+interface AppBarProps extends MuiAppBarProps {
+    open?: boolean;
+}
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<MainProps>(
     ({ theme, open }) => ({
         flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
+        padding: theme?.spacing(3),
+        transition: theme?.transitions.create('margin', {
+            easing: theme?.transitions.easing.sharp,
+            duration: theme?.transitions.duration.leavingScreen,
         }),
         marginLeft: `-${drawerWidth}px`,
         ...(open && {
-            transition: theme.transitions.create('margin', {
-                easing: theme.transitions.easing.easeOut,
-                duration: theme.transitions.duration.enteringScreen,
+            transition: theme?.transitions.create('margin', {
+                easing: theme?.transitions.easing.easeOut,
+                duration: theme?.transitions.duration.enteringScreen,
             }),
             marginLeft: 0,
         }),
@@ -58,7 +68,7 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+})<AppBarProps>(({ theme, open }) => ({
     transition: theme.transitions.create(['margin', 'width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
@@ -85,7 +95,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 function AdminPanel() {
     const theme = useTheme();
     const [open, setOpen] = useState(true);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     // Nested list open states
     const [reportsOpen, setReportsOpen] = useState(false);
@@ -99,7 +109,7 @@ function AdminPanel() {
         setOpen(false);
     };
 
-    const handleMenu = (event) => {
+    const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     };
 

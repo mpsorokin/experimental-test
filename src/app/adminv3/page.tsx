@@ -6,13 +6,56 @@ import {
     ResponsiveContainer, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Cell
 } from 'recharts';
 
+interface SecurityAlert {
+    level: 'critical' | 'warning' | 'info';
+    message: string;
+    time: string;
+    details: string;
+}
+
+interface PerformanceRecord {
+    name: string;
+    value: number;
+    avg: number;
+}
+
+interface PerformanceData {
+    records: PerformanceRecord[];
+}
+
+interface UserActivityRecord {
+    name: string;
+    users: number;
+    sessions: number;
+}
+
+interface AlertData {
+    message: string;
+}
+
+type SecurityAlertsData = SecurityAlert[];
+
+// Тип для активности пользователей — массив записей
+type UserActivityData = UserActivityRecord[];
+
+// Объединённый тип для модального контента
+type ModalContent =
+    | { type: 'system'; data: { cpu: number; memory: number; network: number } }
+    | { type: 'memory'; data: { memory: number } }
+    | { type: 'network'; data: { network: number } }
+    | { type: 'users'; data: UserActivityData }
+    | { type: 'alert'; data: AlertData }
+    | { type: 'alerts'; data: SecurityAlertsData }
+    | { type: 'performance'; data: PerformanceData };
+
+
 const CyberpunkDashboard = () => {
     // State management
     const [activeTab, setActiveTab] = useState('overview');
     const [showModal, setShowModal] = useState(false);
-    const [modalContent, setModalContent] = useState(null);
+    const [modalContent, setModalContent] = useState<ModalContent | null>(null);
     const [animatedValues, setAnimatedValues] = useState({ cpu: 0, memory: 0, network: 0, users: 0 });
-    const [hoverCard, setHoverCard] = useState(null);
+    const [hoverCard, setHoverCard] = useState<string|null>(null);
     const [notificationCount, setNotificationCount] = useState(4);
     const [glitchEffect, setGlitchEffect] = useState(false);
     const [currentTime, setCurrentTime] = useState(''); // State for current time
@@ -79,12 +122,18 @@ const CyberpunkDashboard = () => {
 
     // Animated counter effect
     useEffect(() => {
-        const targetValues = { cpu: 78, memory: 42, network: 91, users: 1342 };
-        const duration = 2000; // Animation duration in ms
-        let startTime = null;
+        const targetValues: { cpu: number; memory: number; network: number; users: number } = {
+            cpu: 78,
+            memory: 42,
+            network: 91,
+            users: 1342
+        };
 
-        const animate = timestamp => {
-            if (!startTime) startTime = timestamp;
+        const duration: number = 2000; // Animation duration in ms
+        let startTime: number | null = null;
+
+        const animate = (timestamp: number): void => {
+            if (startTime === null) startTime = timestamp;
             const progress = Math.min((timestamp - startTime) / duration, 1);
 
             setAnimatedValues({
@@ -137,7 +186,7 @@ const CyberpunkDashboard = () => {
     }, []); // Empty dependency array ensures this runs only once after mount
 
     // Modal handlers
-    const openModal = (content) => {
+    const openModal = (content: ModalContent ) => {
         setModalContent(content);
         setShowModal(true);
     };
@@ -147,7 +196,7 @@ const CyberpunkDashboard = () => {
         setModalContent(null);
     };
 
-    const securityAlerts = [
+    const securityAlerts: SecurityAlert[] = [
         { level: 'critical', message: 'Critical Breach Attempt', time: '2m ago', details: 'Attempted intrusion detected from IP 192.168.1.42. Firewall blocked 3 unauthorized access attempts to the primary database.' },
         { level: 'warning', message: 'Unusual Login Pattern', time: '17m ago', details: 'User admin_johnson logged in from an unrecognized location. Geographical anomaly detected.' },
         { level: 'warning', message: 'Multiple Failed Logins', time: '25m ago', details: 'User account marketing_lead has had 5 failed login attempts in the past 10 minutes. Account temporarily locked.' },
