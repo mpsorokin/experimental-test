@@ -81,7 +81,6 @@ const CyberpunkDashboard = () => {
     useEffect(() => {
         const targetValues = { cpu: 78, memory: 42, network: 91, users: 1342 };
         const duration = 2000; // Animation duration in ms
-        const interval = 20; // Update interval in ms
         let startTime = null;
 
         const animate = timestamp => {

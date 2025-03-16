@@ -11,7 +11,6 @@ import {
     Search,
     Send,
     Settings,
-    Star,
     Bell,
     Plus,
     Activity,
