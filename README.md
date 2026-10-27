@@ -1,36 +1,30 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MARÉ — Maritime Crewing Homepage (2026)
 
-## Getting Started
+A modern, responsive maritime crewing homepage concept, created for a portfolio/demo. **MARÉ is a fictional brand**, not a real agency.
 
-First, run the development server:
+## Preview
+
+Open `index.html` in a browser, or serve with:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+python3 -m http.server 8080
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then visit http://localhost:8080.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+No dependencies, build, API keys, or runtime are required. It can be hosted on GitHub Pages or any static hosting service.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Features
 
-## Learn More
+- Dramatic maritime hero with a self-contained SVG container-ship illustration.
+- Responsive navigation and mobile menu.
+- Functional sample job filters by department and vessel.
+- Four illustrative vacancies with accessible detail dialogs.
+- Seafarer / shipowner pathways, a process section and an inquiry demo.
+- Client-only form validation; **no submissions are sent or stored**.
+- Responsive 2026 visual language with oversized editorial typography, lime and deep-navy palette.
+- `prefers-reduced-motion` support.
 
-To learn more about Next.js, take a look at the following resources:
+## Before production
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Replace fictional listings/salaries, connect a real vacancies API or ATS, implement privacy/legal pages, localization, server-side form handling, and WCAG testing. This is a design prototype, not an operational recruitment platform.
